@@ -1,0 +1,21 @@
+To Do:
+- improve errors to be thrown from actual code file and point at correct line number, rather than interpreter/evaluator
+- test and finish evaluator
+- to use evaluator against the interpreter need to add :
+    - if statements (hight priority)
+    - switch statements (high priority)
+    - break statements (high priority)
+    - console.log (X)
+    - arrays (creation, indexing, length) (medium priority)
+    - ++ (not worth it, make sure to write + 1 in the interpreter)
+    - for loops (maybe I could transform anything using a for loop into a recursive function call instead)
+    - Array.shift(), Object.keys() and Object.hasOwnProperty() functions (low priority)
+    - global variables (medium priority)
+    - let/var and const (will have a constant store and normal store) (no priority - improvement only)
+
+    - throw new Error (X)
+    - strings? (X)
+    - module.exports statements (I think filtering the heap and returning it, together with the function names, would work) (low priority)
+    - comments (X)
+    - multiple variables per declaration and empty declarations (no priority - improvement only)
+    - inline functions

@@ -1,0 +1,15 @@
+{
+  "name": "jscompiler",
+  "version": "1.0.0",
+  "description": "Compiler for a simple JavaScript (lambda calculus only) language written using the three Futurama projections ",
+  "main": "index.js",
+  "scripts": {
+    "test": "t"
+  },
+  "author": "Teodora Sandu",
+  "license": "ISC",
+  "dependencies": {
+    "jison": "^0.4.18",
+    "lex": "^1.7.9"
+  }
+}
