@@ -28,11 +28,26 @@ function interpret(testCase, isTesting) {
         } else {
             const result = interpreter.interpret(programParseTree, functionApplicationParseTree);
             console.log("Result is: " + result);
-            if (result === testCase.expected) {
+            if(Array.isArray(testCase.expected)) {
+                if (testCase.expected.length !== result.length) {
+                    console.log("INCORRECT");
+                    incorrectCount++;
+                }
+                for(let i = 0;i < testCase.expected.length; i = i + 1) {
+                    if (testCase.expected[i] !== result[i]) {
+                        console.log("INCORRECT");
+                        incorrectCount++;
+                        break;
+                    }
+                }
                 console.log("CORRECT");
             } else {
-                console.log("INCORRECT");
-                incorrectCount++;
+                if (result === testCase.expected) {
+                    console.log("CORRECT");
+                } else {
+                    console.log("INCORRECT");
+                    incorrectCount++;
+                }
             }
         }
     } else {
@@ -43,7 +58,6 @@ function interpret(testCase, isTesting) {
 
 function testInterpreter() {
     incorrectCount = 0;
-    // interpret(test.earlyReturn, false)
 
     for(testName in test) {
         console.log("Test name: " + testName);

@@ -112,7 +112,7 @@ const complexFunction = {
     }
 
     function h (a, b, c, d, e, f) {
-        return j(a, b, c) - g (d, e, f);
+        return j(a, b, c) - g(d, e, f);
     }
 
     function call(a, b, c) {
@@ -126,6 +126,10 @@ const complexFunction = {
     functionApplication: `call(5, 6, 7)`,
     expected: -155
 }
+
+// h(5, 2, 6, 6, 7, 4) - b, c are wrong
+// j(5, 2, 6) = 13 
+// g(6, 7, 4) = 168
 
 // f(): -1
 const negativeNumber = {
@@ -222,7 +226,7 @@ const arrayFunctions = {
         return x.length + x[3];
     }`,
     functionApplication: `f(1)`,
-    expected: 7
+    expected: 8
 }
 
 const objectKeys = {
