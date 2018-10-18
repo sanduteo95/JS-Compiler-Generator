@@ -7,8 +7,7 @@ const interpreter = require("./lib/interpreter.js");
 const evaluator = require("./lib/evaluator.js");
 
 function createParseTree(input) {
-    const parseTree = parser.parse(input)
-    return parseTree;
+    return parser.parse(input)
 }
 
 let incorrectCount = 0;
@@ -20,39 +19,40 @@ function interpret(testCase, isTesting) {
         if (testCase.expected === 'error') {
             try {
                 interpreter.interpret(programParseTree, functionApplicationParseTree);
-                console.log("INCORRECT");
+                console.log("       INCORRECT");
                 incorrectCount++;
             } catch {
-                console.log("CORRECT");
+                console.log("       CORRECT");
             }
         } else {
             const result = interpreter.interpret(programParseTree, functionApplicationParseTree);
-            console.log("Result is: " + result);
+            console.log("   Result is: " + result);
             if(Array.isArray(testCase.expected)) {
                 if (testCase.expected.length !== result.length) {
-                    console.log("INCORRECT");
+                    console.log("       INCORRECT");
                     incorrectCount++;
-                }
-                for(let i = 0;i < testCase.expected.length; i = i + 1) {
-                    if (testCase.expected[i] !== result[i]) {
-                        console.log("INCORRECT");
-                        incorrectCount++;
-                        break;
+                } else {
+                    for(let i = 0;i < testCase.expected.length; i = i + 1) {
+                        if (testCase.expected[i] !== result[i]) {
+                            console.log("       INCORRECT");
+                            incorrectCount++;
+                            break;
+                        }
                     }
+                    console.log("       CORRECT");
                 }
-                console.log("CORRECT");
             } else {
                 if (result === testCase.expected) {
-                    console.log("CORRECT");
+                    console.log("       CORRECT");
                 } else {
-                    console.log("INCORRECT");
+                    console.log("       INCORRECT");
                     incorrectCount++;
                 }
             }
         }
     } else {
         const result = interpreter.interpret(programParseTree, functionApplicationParseTree);
-        console.log("Result is: " + result);
+        console.log("   Result is: " + result);
     }
 }
 
@@ -60,11 +60,11 @@ function testInterpreter() {
     incorrectCount = 0;
 
     for(testName in test) {
-        console.log("Test name: " + testName);
+        console.log("***TEST: " + testName);
         interpret(test[testName], true);
     }
 
-    console.log("===")
+    console.log("\n===\n")
     if (incorrectCount !== 0) {
         console.log("This many tests failed: " + incorrectCount);
     } else {
@@ -80,32 +80,49 @@ function evaluate(testCase, isTesting) {
 
     if (isTesting) {
         if (testCase.expected === 'error') {
-            console.log("Result is: " + JSON.stringify(result));
+            console.log("   Result is: " + JSON.stringify(result));
             if (result[0] !== 'Const') {
-                console.log("CORRECT (MAYBE)");
+                console.log("       CORRECT (MAYBE)");
             } else {
-                console.log("INCORRECT");
+                console.log("       INCORRECT");
                 incorrectCount++;
             }  
         } else {
-            console.log("Result is: " + JSON.stringify(result));
-            if ((!result && !testCase.expected) || result[1] === testCase.expected) {
-                console.log("CORRECT");
+            console.log("   Result is: " + JSON.stringify(result));
+            if (Array.isArray(testCase.expected)) {
+                if (testCase.expected.length !== result[1].length) {
+                    console.log("       INCORRECT");
+                    incorrectCount++;
+                } else {
+                    for(let i = 0;i < testCase.expected.length; i = i + 1) {
+                        if (testCase.expected[i] !== result[1][i]) {
+                            console.log("       INCORRECT");
+                            incorrectCount++;
+                            break;
+                        }
+                    }
+                    console.log("       CORRECT");
+                }
             } else {
-                console.log("INCORRECT");
-                incorrectCount++;
+                if ((!result && !testCase.expected) || result[1] === testCase.expected) {
+                    console.log("       CORRECT");
+                } else {
+                    console.log("       INCORRECT");
+                    incorrectCount++;
+                }
             }
         }
     } else {
-        console.log("Result is: " + JSON.stringify(result));
+        console.log("   Result is: " + JSON.stringify(result));
     }
 }
 
 function testEvaluator() {
     incorrectCount = 0;
-    // evaluate(test.functionCallsWithMultipleParameters);
 
+    // const testName = 'objectKeys'
     for(testName in test) {
+        console.log("***TEST: " + testName);
         evaluate(test[testName], true);
     }
     console.log("===")
@@ -129,7 +146,7 @@ if (process.argv.length < 3) {
 
             fs.readFile(path.join(__dirname, process.argv[3]), {encoding: 'utf-8'}, function (err, data){
                 if (!err) {
-                    console.log(JSON.stringify(createParseTree(data)));
+                    console.log(JSON.stringify(createParseTree(data, null, 2)));
                 } else {
                     throw new Error(err);
                 }
@@ -178,11 +195,3 @@ if (process.argv.length < 3) {
             throw new Error('Only allowed to interpret and evaluate for now')
     }
 }
-
-
-// How to run
-// node index.js -p <fileName.js> - prints out a parse tree
-// node index.js -i <fileName.js> "<function call>" - returns result of interpreter
-// node index.js -e <fileName.js> "<function call>" - returns result of evaluator
-// node index.js -ti - tests the interpreter
-// node index.js -te - tests the evaluator
