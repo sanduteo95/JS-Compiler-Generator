@@ -245,6 +245,64 @@ const globalVars = {
     expected: 1
 }
 
+const forLoops = {
+    program: `function f() {
+        let sum = 0;
+        for(let i=0; i<4; i=i+1) {
+            sum = sum + i;
+        }
+        return sum;
+    }`,
+    functionApplication: `f()`,
+    expected: 6
+}
+
+const moduleExports = {
+    program: `function f() {
+        return 1;
+    }
+    module.exports = {
+        f: f
+    }`,
+    functionApplication: `f()`,
+    expected: 1
+}
+
+const breakLoop = {
+    program: `function f(x) {
+        for(let i=0; i<4; i=i+1) {
+            x = x + i;
+            break;
+        }
+        return x;
+    }
+    module.exports = {
+        f: f
+    }`,
+    functionApplication: `f(2)`,
+    expected: 2
+}
+
+const switchStatements = {
+    program: `function f(x) {
+        switch(x) {
+            case 1:
+                x = x + 1;
+            case 2:
+                x = x + 2;
+                break;
+            default:
+                x = x + 3;
+        }
+        return x;
+    }
+    
+    module.exports = {
+        f: f
+    }`,
+    functionApplication: `f(1)`,
+    expected: 5
+}
 module.exports = {
     simpleFunctionNothing: simpleFunctionNothing,
     nestedFunctionCallNothing: nestedFunctionCallNothing,
@@ -266,5 +324,9 @@ module.exports = {
     ifStatement: ifStatement,
     arrayFunctions: arrayFunctions,
     objectKeys: objectKeys,
-    globalVars: globalVars
+    globalVars: globalVars,
+    forLoops: forLoops,
+    moduleExports: moduleExports,
+    breakLoop: breakLoop,
+    switchStatements: switchStatements
 }

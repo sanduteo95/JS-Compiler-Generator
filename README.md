@@ -8,19 +8,20 @@ Aims to become a compiler-compiler by applying the three [Futamura projections](
 The language should be consistent with the JavaScript syntax rules, but contain a smaller subset of them
 * Constant (integers, booleans and strings)
 * Arrays (initialisation, indexing and length calculation)
-* Local and global variable declarations (`const`, `let`, `var`, but they are all syntactic sugar for `var`)
+* Local and global variable declarations (`const`, `let`, `var`, but they are all syntactic sugar for `var` and the global variables cannot be interspersed inbetween function definitions)
 * Variable assignment
-* Arithmetic and logical operations (no `++` or `--`)
-* If statements
+* Arithmetic and logical operations (no `++` or `--`, or bit vector manipulation)
+* If statements (for now `else if` statements are not recognised)
 * For loops
 * Return statements
 * Functions (including recursion, but not including inline function definitions)
 * `console.log(...)`
 * `throw new Error(...)`
 * `Object.keys()`
-* Switch statements (T0DO)
-* Breaks (TODO)
-* `module.export = { ... }` (TODO)
+* Switch statements (for now they do not allow multiline cases - TODO)
+* Breaks
+* `module.export = { ... }` (for now they do not throw errors if functions are accesses without being exported - TODO)
+* multiline/single-line comments (for now it does not allow commented out code)
 
 ## What it does
 The JSCompiler contains a lexer, parser, interpreter and partial evaluator. 
@@ -37,6 +38,7 @@ The JSCompiler contains a lexer, parser, interpreter and partial evaluator.
          - tail call optimisation
          - dead code elimination
          - loop unrolling
+         - conditional reduction
 
 ## How to run it
 `node index.js -p <fileName.js>` - prints out a parse tree
