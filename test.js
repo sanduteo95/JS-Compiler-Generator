@@ -1,6 +1,9 @@
 // f(): undefined
 const simpleFunctionNothing = {
     program: `function f () {
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: undefined
@@ -13,6 +16,9 @@ const nestedFunctionCallNothing = {
     
     function g () {
         f();
+    }
+    module.exports = {
+        g: g
     }`,
     functionApplication: `g()`,
     expected: undefined
@@ -24,6 +30,9 @@ const simpleFunctionCallNoReturn = {
         var x = 2; 
         var y = x;
         x = x + 1;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: undefined
@@ -36,6 +45,9 @@ const simpleFunctionCallWithReturn = {
         var y = x;
         x = x + 1;
         return x + y;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 5
@@ -48,6 +60,9 @@ const functionCallWithOneParameter = {
         var y = x;
         x = x + 1;
         return x + y + z;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f(5)`,
     expected: 10
@@ -57,6 +72,9 @@ const functionCallWithOneParameter = {
 const functionCallsWithMultipleParameters = {
     program: `function isSquareRootOf(x, n) {
         return x * x == n;
+    }
+    module.exports = {
+        isSquareRootOf: isSquareRootOf
     }`,
     // functionApplication: `isSquareRootOf(2)`,
     functionApplication: `isSquareRootOf(2, 3)`,
@@ -71,6 +89,9 @@ const nestedFunctionCallsWithMultipleParameters = {
 
     function isSquareRootOf(x, n) {
         return square(x) == n;
+    }
+    module.exports = {
+        isSquareRootOf: isSquareRootOf
     }`,
     functionApplication: `isSquareRootOf(2, 4)`,
     expected: true
@@ -83,6 +104,9 @@ const badOrderFunctions = {
     }
     function f(x) {
         return x;
+    }
+    module.exports = {
+        g: g
     }`,
     functionApplication: `g()`,
     expected: 'error' 
@@ -96,6 +120,9 @@ const varaibleAndFunctionNameError = {
     
     function g(f) {
         return f(f);
+    }
+    module.exports = {
+        g: g
     }`,
     functionApplication: `g(5)`,
     expected: 'error'
@@ -122,6 +149,9 @@ const complexFunction = {
         y = y * 3;
         var z = y - x;
         return h(a, x, b, y, c, z);
+    }
+    module.exports = {
+        call: call
     }`,
     functionApplication: `call(5, 6, 7)`,
     expected: -155
@@ -131,6 +161,9 @@ const complexFunction = {
 const negativeNumber = {
     program: `function f() {
         return -1;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: -1
@@ -140,6 +173,9 @@ const negativeNumber = {
 const stringVariable = {
     program: `function f(s) {
         return 'hey ' + s;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f('there')`,
     expected: 'hey there'
@@ -150,6 +186,9 @@ const consoleLogging = {
     program: `function f() {
         console.log('printing stuff only');
         return 1;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f(0)`,
     expected: 1
@@ -163,6 +202,9 @@ const comments = {
         comment */
         // single line comment
         return 0;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 0
@@ -173,6 +215,9 @@ const errorThrowing = {
     program: `function f() {
         throw new Error('error');
         return 1;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 'error'
@@ -183,6 +228,9 @@ const recursion = {
     program: `function f(x) {
         console.log(x);
         return x == 10 || f(x+1);
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f(1)`,
     expected: true
@@ -195,6 +243,9 @@ const earlyReturn = {
         return x;
         x=x+1;
         return x;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 1
@@ -211,6 +262,9 @@ const ifStatement = {
             }
         }
         return 0;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f(0, 2)`,
     expected: 2
@@ -220,6 +274,9 @@ const arrayFunctions = {
     program: `function f(a) {
         var x = [a, a, a, 4]; 
         return x.length + x[3];
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f(1)`,
     expected: 8
@@ -231,6 +288,9 @@ const objectKeys = {
         x['hey'] = 'test';
         x['there'] = 'text';
         return Object.keys(x);
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: ['hey', 'there']
@@ -240,6 +300,9 @@ const globalVars = {
     program: `var x = 1;
     function f() {
         return x;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 1
@@ -252,6 +315,9 @@ const forLoops = {
             sum = sum + i;
         }
         return sum;
+    }
+    module.exports = {
+        f: f
     }`,
     functionApplication: `f()`,
     expected: 6
@@ -266,6 +332,16 @@ const moduleExports = {
     }`,
     functionApplication: `f()`,
     expected: 1
+}
+
+const moduleExportsError = {
+    program: `function f() {
+        return 1;
+    }
+    module.exports = {
+    }`,
+    functionApplication: `f()`,
+    expected: 'error'
 }
 
 const breakLoop = {
@@ -303,6 +379,7 @@ const switchStatements = {
     functionApplication: `f(1)`,
     expected: 5
 }
+
 module.exports = {
     simpleFunctionNothing: simpleFunctionNothing,
     nestedFunctionCallNothing: nestedFunctionCallNothing,

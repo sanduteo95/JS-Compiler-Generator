@@ -120,7 +120,7 @@ function evaluate(testCase, isTesting) {
 function testEvaluator() {
     incorrectCount = 0;
 
-    // const testName = 'objectKeys'
+    // const testName = 'nestedFunctionCallsWithMultipleParameters'
     for(testName in test) {
         console.log("***TEST: " + testName);
         evaluate(test[testName], true);

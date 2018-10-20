@@ -20,7 +20,7 @@ The language should be consistent with the JavaScript syntax rules, but contain 
 * `Object.keys()`
 * Switch statements (for now they do not allow multiline cases - TODO)
 * Breaks
-* `module.export = { ... }` (for now they do not throw errors if functions are accesses without being exported - TODO)
+* `module.export = { ... }` (for now the expectation is that the exported function is exported under its defined name)
 * multiline/single-line comments (for now it does not allow commented out code)
 
 ## What it does
@@ -50,3 +50,15 @@ The JSCompiler contains a lexer, parser, interpreter and partial evaluator.
 `node index.js -ti` - tests the interpreter (with example function from `test.js`; used for regression testing)
 
 `node index.js -te` - tests the evaluator (with example function from `test.js`; used for regression testing)
+
+## Further improvements
+- [ ] Improve parsing for sequences and comments
+- [ ] Improve parsing errors (include row and column information)
+- [ ] Create specialised errors in the interpreter, so they point at the correct file, row and column
+- [ ] Add more error handling (invalid array operations)	
+- [ ] Implement	`else if`, `while` loops, `++`, `--`
+- [ ] Implement `switch` stataments with multiples cases per line
+- [ ] Improve variable declaration with information about `const`, `var` and `let`
+- [ ] Implement require statements (i.e. requiring a file and then calling an exported function from that file) 
+- [ ] Improve `module.exports` to be able to export functions under different names
+- [ ] Implement `Maximum call stack size exceeded` errors
