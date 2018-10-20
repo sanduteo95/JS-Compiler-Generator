@@ -282,6 +282,23 @@ const arrayFunctions = {
     expected: 8
 }
 
+const nestedArrays = {
+    program: `function f() {
+        var x = [];
+        x[0] = [];
+        x[0][1] = 1;
+        x[1] = [];
+        x[1][0] = 2;
+        return x[1].length;
+    }
+    
+    module.exports = {
+        f: f
+    }`,
+    functionApplication: `f()`,
+    expected: 1
+}
+
 const objectKeys = {
     program: `function f() {
         var x = []; 
@@ -400,10 +417,12 @@ module.exports = {
     earlyReturn: earlyReturn,
     ifStatement: ifStatement,
     arrayFunctions: arrayFunctions,
+    nestedArrays: nestedArrays,
     objectKeys: objectKeys,
     globalVars: globalVars,
     forLoops: forLoops,
     moduleExports: moduleExports,
+    moduleExportsError: moduleExportsError,
     breakLoop: breakLoop,
     switchStatements: switchStatements
 }

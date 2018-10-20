@@ -120,7 +120,6 @@ function evaluate(testCase, isTesting) {
 function testEvaluator() {
     incorrectCount = 0;
 
-    // const testName = 'nestedFunctionCallsWithMultipleParameters'
     for(testName in test) {
         console.log("***TEST: " + testName);
         evaluate(test[testName], true);
@@ -136,9 +135,18 @@ function testEvaluator() {
 // one argument tells us whether to interpret or evaluate
 // the other one what file to run it on
 if (process.argv.length < 3) {
-    throw new Error('Function not called with enough aguments: ' + process.args.lenggth + ' instead of at least' + 3);
+    throw new Error('Function not called with enough aguments: ' + process.args.length + ' instead of at least' + 3);
 } else {
     switch(process.argv[2]) {
+        case '-f1':
+            const interpreterProgram = require('./output.json');
+            const program = test.simpleFunctionCallWithReturn.program;
+            const functionApplication = test.simpleFunctionCallWithReturn.functionApplication;
+            const interpreterFunctionApplication = ['Application', ['Identifier', 'interpret'], [createParseTree(program), createParseTree(functionApplication)]];
+            
+            let result = evaluator.evaluate(interpreterProgram, interpreterFunctionApplication);
+            console.log(JSON.stringify(result));
+            break;
         case '-p':
             if (process.argv.length !== 4) {
                 throw new Error('This command requires a fourth argument for the file name');
