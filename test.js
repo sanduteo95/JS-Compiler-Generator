@@ -97,7 +97,7 @@ const nestedFunctionCallsWithMultipleParameters = {
     expected: true
 }
     
-// g(): error (g called function that was defined after it)
+// g(): 1
 const badOrderFunctions = {
     program: `function g() {
         return f(1);
@@ -109,7 +109,7 @@ const badOrderFunctions = {
         g: g
     }`,
     functionApplication: `g()`,
-    expected: 'error' 
+    expected: 1 
 }
     
 // g(5): error (f is both function and variable)

@@ -120,6 +120,7 @@ function evaluate(testCase, isTesting) {
 function testEvaluator() {
     incorrectCount = 0;
 
+    // const testName = 'moduleExportsError'
     for(testName in test) {
         console.log("***TEST: " + testName);
         evaluate(test[testName], true);
@@ -139,13 +140,27 @@ if (process.argv.length < 3) {
 } else {
     switch(process.argv[2]) {
         case '-f1':
-            const interpreterProgram = require('./output.json');
+            // the parser interpreter
+            const interpreterProgram = require('./interpreterOutput.json');
+            // the first argument
             const program = test.simpleFunctionCallWithReturn.program;
+            // the second argument
             const functionApplication = test.simpleFunctionCallWithReturn.functionApplication;
-            const interpreterFunctionApplication = ['Application', ['Identifier', 'interpret'], [createParseTree(program), createParseTree(functionApplication)]];
             
-            let result = evaluator.evaluate(interpreterProgram, interpreterFunctionApplication);
-            console.log(JSON.stringify(result));
+            // calls the function interpret on all (known) arguments (should return the same thing as running the evaluator on the program)
+            const interpreterFunctionApplication = createParseTree(interpreterProgram[1][0]+ `(` + JSON.stringify(createParseTree(program)) + `, ` + JSON.stringify(createParseTree(functionApplication))+ `)`);
+
+            // calls the function interpret only on the program (should return an AST that if evaluated again with more arguments, returns the right thing)
+            // const interpreterFunctionApplication = ['Application', ['Identifier', 'interpret'], [createParseTree(program), createParseTree(functionApplication)]];
+
+            let evaluatorResult = evaluator.evaluate(interpreterProgram, interpreterFunctionApplication);
+            console.log(JSON.stringify(evaluatorResult));
+
+            // const translator = require('./lib/translator.js');
+            // console.log(translator.translate(evaluatorResult));
+            // test interpret
+            // let interpreterResult = interpreter.interpret(evaluatorResult, ['Application', ['Identifier', 'interpret'], []]);
+            // console.log(JSON.stringify(interpreterResult));
             break;
         case '-p':
             if (process.argv.length !== 4) {

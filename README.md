@@ -34,7 +34,7 @@ The JSCompiler contains a lexer, parser, interpreter and partial evaluator.
          - constant folding
          - constant propagation
          - constant inlining
-         - function inlinging
+         - function inlining
          - tail call optimisation
          - dead code elimination
          - loop unrolling

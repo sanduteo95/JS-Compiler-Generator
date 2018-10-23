@@ -1,4 +1,8 @@
 /node_modules
 f.js
-output.json
+interpreterOutput.json
+evaluatorOutput.json
 ./.DS_Store
+output.json
+output.js
+lib/translator.js
